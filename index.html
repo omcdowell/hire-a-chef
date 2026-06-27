@@ -90,6 +90,33 @@
   .splitter-foot{margin-top:14px;font-size:.86rem;color:var(--cream-dim)}
   .splitter-foot b{color:var(--herb);font-weight:600}
 
+  /* currency toggle */
+  .curtoggle{display:inline-flex;gap:4px;margin-top:18px;background:var(--night-2);
+    border:1px solid var(--line);border-radius:99px;padding:4px}
+  .curbtn{font-family:'Space Mono',monospace;font-size:.82rem;letter-spacing:.04em;
+    color:var(--cream-dim);background:transparent;border:0;border-radius:99px;
+    padding:8px 17px;cursor:pointer;transition:background .2s,color .2s}
+  .curbtn:hover{color:var(--cream)}
+  .curbtn.is-on{background:var(--gold);color:var(--night);font-weight:700}
+  .curbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* cost breakdown */
+  .breakdown{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+  .bd-cap{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--cream-dim);margin-bottom:11px}
+  .bd-bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--night-3)}
+  .bd-bar i{display:block;height:100%}
+  .bd-chef{background:var(--gold)}
+  .bd-ing{background:var(--herb)}
+  .bd-rows{display:flex;justify-content:space-between;gap:14px;margin-top:14px}
+  .bd-item{display:flex;flex-direction:column;gap:3px}
+  .bd-item:last-child{align-items:flex-end;text-align:right}
+  .bd-key{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--cream-dim)}
+  .bd-dot{width:10px;height:10px;border-radius:3px;flex:none}
+  .bd-dot.chef{background:var(--gold)}
+  .bd-dot.ing{background:var(--herb)}
+  .bd-item b{font-size:1.15rem;color:var(--cream);font-weight:700}
+
   .anchor-line{margin-top:30px;font-size:1.05rem;color:var(--cream-dim)}
   .anchor-line b{color:var(--papaya);font-weight:600}
 
@@ -111,13 +138,17 @@
 
   /* ---------- reassurance ---------- */
   .real{padding:64px 0;border-top:1px solid var(--line)}
-  .real h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:26px}
+  .real h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:10px}
+  .real-intro{color:var(--cream-dim);max-width:54ch;margin-bottom:28px;font-size:1.02rem}
   .real-grid{display:grid;grid-template-columns:1fr;gap:14px}
   @media(min-width:720px){.real-grid{grid-template-columns:repeat(3,1fr)}}
-  .rcard{background:var(--night-2);border:1px solid var(--line);border-radius:14px;padding:22px}
-  .rcard .rk{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:11px}
+  .rcard{background:var(--night-2);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column}
+  .rcard .rk{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+  .rcard .rtitle{font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;line-height:1.14;letter-spacing:-.01em;margin-bottom:9px}
   .rcard p{font-size:.94rem;color:var(--cream-dim)}
   .rcard p b{color:var(--cream);font-weight:500}
+  .rcost{margin-top:auto;padding-top:13px;font-family:'Space Mono',monospace;font-size:.82rem;color:var(--herb);line-height:1.4}
+  .rcost span{display:block;color:var(--cream-dim);text-transform:uppercase;letter-spacing:.14em;font-size:.66rem;margin-bottom:3px}
 
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
@@ -160,14 +191,28 @@
     <section class="split reveal">
       <div class="kicker">split between us</div>
       <h2>A private chef, cooking dinner nightly, works out at -- each --</h2>
-      <div class="bignum"><span class="bignum-cur">₱</span><span id="num">495</span></div>
+      <div class="bignum"><span class="bignum-cur" id="numcur">₱</span><span id="num">495</span></div>
       <div class="bignum-sub">per head, <span class="mono">per dinner</span></div>
-      <div class="bignum-gbp" id="gbpline">≈ £6.80 a head · about ₱13,850 each per month</div>
+      <div class="bignum-gbp" id="gbpline">≈ £7 a head · about ₱13,850 each per month</div>
+
+      <div class="curtoggle" role="group" aria-label="Show costs in">
+        <button type="button" class="curbtn is-on" data-cur="PHP">₱ PHP</button>
+        <button type="button" class="curbtn" data-cur="GBP">£ GBP</button>
+      </div>
 
       <div class="splitter">
         <div class="splitter-top"><span>How many of us chip in?</span><span class="cnt" id="cnt">4 friends</span></div>
         <input type="range" id="friends" min="2" max="6" step="1" value="4" aria-label="Number of friends splitting the cost">
-        <div class="splitter-foot">A trained chef at <b>₱40k</b> plus the week's good groceries -- one bill, divided.</div>
+        <div class="splitter-foot">A trained chef plus the week's good groceries -- one bill, divided.</div>
+
+        <div class="breakdown">
+          <div class="bd-cap">Where it goes, each per month</div>
+          <div class="bd-bar"><i class="bd-chef" style="width:72.2%"></i><i class="bd-ing" style="width:27.8%"></i></div>
+          <div class="bd-rows">
+            <div class="bd-item"><span class="bd-key"><i class="bd-dot chef"></i>Chef's pay</span><b class="mono" id="bdChef">₱10,000</b></div>
+            <div class="bd-item"><span class="bd-key"><i class="bd-dot ing"></i>Ingredients</span><b class="mono" id="bdIng">₱3,850</b></div>
+          </div>
+        </div>
       </div>
 
       <p class="anchor-line">For reference, <b>one</b> casual dinner out in Makati runs about ₱650 a head. We'd be eating better, at home, for less.</p>
@@ -175,19 +220,44 @@
 
     <!-- REASSURANCE -->
     <section class="real reveal">
-      <h2>And it's completely doable</h2>
+      <h2>Where we'd find our chef</h2>
+      <p class="real-intro">Plenty of real routes -- from a properly trained pro to a trusted referral. Roughly best-quality first.</p>
       <div class="real-grid">
         <div class="rcard">
-          <div class="rk">Where we find them</div>
-          <p><b>CCA Manila</b> (the culinary school) places trained private chefs with households, and reputable agencies do too -- vetted, with a replacement if it's not the right fit.</p>
+          <div class="rk">Culinary schools</div>
+          <h3 class="rtitle">Culinary school job boards</h3>
+          <p>Schools like <b>CCA Manila</b> and Enderun train and place graduates, and CCA runs a public jobs board where we can post a private-chef role straight to their alumni network. The best route to a genuinely trained chef.</p>
+          <div class="rcost"><span>Cost</span>Free to post</div>
         </div>
         <div class="rcard">
-          <div class="rk">Above board</div>
-          <p>A proper contract under the Philippine <b>Kasambahay Law</b> -- fair pay, a rest day, real benefits. We do this right, not cash-in-hand.</p>
+          <div class="rk">Staff agencies</div>
+          <h3 class="rtitle">Licensed staff agencies</h3>
+          <p>DOLE-licensed agencies (e.g. <b>MaidProvider.ph</b>) recruit, NBI-vet and medically screen cooks, place across Makati &amp; BGC, and usually offer a replacement guarantee. The safest, most hands-off option.</p>
+          <div class="rcost"><span>Cost</span>Placement fee ≈ ₱20,000 (~1 month's pay)</div>
         </div>
         <div class="rcard">
-          <div class="rk">One simple pot</div>
-          <p>We pool a monthly kitty: <b>chef + groceries</b>, divided four ways. One transfer each, and dinner is handled for a whole month.</p>
+          <div class="rk">Job platforms</div>
+          <h3 class="rtitle">Online job boards</h3>
+          <p>Post a "private chef for a family" listing on <b>JobStreet, Kalibrr or Indeed PH</b> and screen applicants ourselves. Cheaper than an agency -- but we do the interviewing.</p>
+          <div class="rcost"><span>Cost</span>Indeed free · Kalibrr/JobStreet ~₱8,000+/post</div>
+        </div>
+        <div class="rcard">
+          <div class="rk">Facebook groups</div>
+          <h3 class="rtitle">Facebook hiring groups</h3>
+          <p>Groups like <b>"Now Hiring Kasambahay"</b> get replies the same day. Fast and free -- but candidates are unscreened, so check references and meet in person first.</p>
+          <div class="rcost"><span>Cost</span>Free to post</div>
+        </div>
+        <div class="rcard">
+          <div class="rk">Referrals</div>
+          <h3 class="rtitle">Word of mouth</h3>
+          <p>The most trusted local route: ask friends, neighbours and househelp who they'd vouch for. The best cooks usually come recommended rather than advertised.</p>
+          <div class="rcost"><span>Cost</span>Free (a small thank-you is customary)</div>
+        </div>
+        <div class="rcard">
+          <div class="rk">Expat networks</div>
+          <h3 class="rtitle">Condo &amp; expat networks</h3>
+          <p>Building concierge boards and expat communities constantly circulate trusted cooks moving between households -- a great way to pick up an already-vetted chef.</p>
+          <div class="rcost"><span>Cost</span>Free</div>
         </div>
       </div>
     </section>
@@ -225,11 +295,16 @@
 
 <script>
 (function(){
-  var TOTAL=40000+500*28*1.10;  // chef + 28 dinners of groceries (10% nicer basket)
+  var CHEF=40000;                       // chef's monthly pay
+  var ING=500*28*1.10;                  // 28 dinners of groceries (10% nicer basket)
+  var TOTAL=CHEF+ING;
   var DINNERS=28, RGBP=73;
+  var cur='PHP';
   var $=function(id){return document.getElementById(id);};
   var peso=function(n){return '₱'+Math.round(n).toLocaleString('en-PH');};
   var pgbp=function(n){return '£'+Math.round(n/RGBP).toLocaleString('en-GB');};
+  var money=function(n){return cur==='GBP'?pgbp(n):peso(n);};      // selected currency
+  var other=function(n){return cur==='GBP'?peso(n):pgbp(n);};      // the other one
 
   function render(){
     var n=+$('friends').value;
@@ -237,14 +312,29 @@
     var perDinner=perMonth/DINNERS;
 
     $('cnt').textContent = n+(n===1?' friend':' friends');
-    $('num').textContent = Math.round(perDinner).toLocaleString('en-PH');
-    $('gbpline').textContent = '≈ '+pgbp(perDinner)+' a head · about '+peso(perMonth)+' each per month';
+    $('numcur').textContent = cur==='GBP'?'£':'₱';
+    var head = cur==='GBP'?Math.round(perDinner/RGBP):Math.round(perDinner);
+    $('num').textContent = head.toLocaleString(cur==='GBP'?'en-GB':'en-PH');
+    $('gbpline').textContent = '≈ '+other(perDinner)+' a head · about '+money(perMonth)+' each per month';
+
+    $('bdChef').textContent = money(CHEF/n);
+    $('bdIng').textContent  = money(ING/n);
 
     var big=$('num');
     big.style.opacity=.45;
     setTimeout(function(){big.style.opacity=1;},120);
   }
   $('friends').addEventListener('input',render);
+
+  Array.prototype.forEach.call(document.querySelectorAll('.curbtn'),function(b){
+    b.addEventListener('click',function(){
+      cur=b.getAttribute('data-cur');
+      Array.prototype.forEach.call(document.querySelectorAll('.curbtn'),function(x){
+        x.classList.toggle('is-on',x===b);
+      });
+      render();
+    });
+  });
   render();
 
   if('IntersectionObserver' in window){
