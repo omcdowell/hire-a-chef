@@ -58,11 +58,6 @@
     text-shadow:0 0 50px rgba(244,184,71,.35)}
   .hero-sub{font-size:clamp(1.15rem,2.4vw,1.5rem);max-width:34ch;color:var(--cream-dim);font-weight:300}
   .hero-sub b{color:var(--cream);font-weight:500}
-  .scrollcue{margin-top:46px;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.25em;
-    text-transform:uppercase;color:var(--cream-dim);display:flex;align-items:center;gap:10px}
-  .scrollcue .dot{width:7px;height:7px;border-radius:50%;background:var(--papaya);animation:pulse 1.8s infinite}
-  @keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
-  @media(prefers-reduced-motion:reduce){.scrollcue .dot{animation:none}}
 
   /* ---------- the number / split ---------- */
   .split{padding:80px 0;text-align:center}
@@ -114,25 +109,6 @@
   .dr p{color:var(--cream-dim);font-size:.98rem}
   .dr p b{color:var(--cream);font-weight:500}
 
-  /* ---------- sample menu ---------- */
-  .menu{padding:70px 0;border-top:1px solid var(--line)}
-  .menu-card{background:linear-gradient(165deg,var(--night-2),var(--night));
-    border:1px solid var(--line);border-radius:22px;padding:clamp(28px,5vw,48px);position:relative;overflow:hidden}
-  .menu-card::before{content:"";position:absolute;inset:0;
-    background:radial-gradient(80% 60% at 100% 0,rgba(244,184,71,.08),transparent 60%);pointer-events:none}
-  .menu-eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--herb);text-align:center;margin-bottom:8px}
-  .menu-title{font-family:'Fraunces',serif;font-style:italic;font-weight:600;text-align:center;
-    font-size:clamp(1.8rem,5vw,2.6rem);margin-bottom:30px;letter-spacing:-.01em}
-  .menu-rows{display:flex;flex-direction:column;gap:2px}
-  .mrow{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:baseline;padding:13px 0;
-    border-bottom:1px dashed var(--line)}
-  .mrow:last-child{border-bottom:none}
-  .mday{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--gold);letter-spacing:.08em;white-space:nowrap;padding-top:3px}
-  .mdish{font-family:'Fraunces',serif;font-size:clamp(1.05rem,2.4vw,1.3rem);font-weight:500}
-  .mdish small{display:block;font-family:'Outfit',sans-serif;font-size:.85rem;color:var(--cream-dim);font-weight:300;margin-top:2px}
-  .menu-foot{text-align:center;margin-top:26px;font-size:.9rem;color:var(--cream-dim)}
-
   /* ---------- reassurance ---------- */
   .real{padding:64px 0;border-top:1px solid var(--line)}
   .real h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:26px}
@@ -143,26 +119,28 @@
   .rcard p{font-size:.94rem;color:var(--cream-dim)}
   .rcard p b{color:var(--cream);font-weight:500}
 
-  /* ---------- CTA ---------- */
-  .cta{padding:90px 0 80px;border-top:1px solid var(--line);text-align:center}
-  .cta h2{font-family:'Fraunces',serif;font-weight:800;font-size:clamp(2.6rem,8vw,5rem);
-    line-height:.96;letter-spacing:-.025em;margin-bottom:20px}
-  .cta h2 em{font-style:italic;color:var(--gold);text-shadow:0 0 50px rgba(244,184,71,.35)}
-  .cta p{max-width:42ch;margin:0 auto 30px;color:var(--cream-dim);font-size:1.12rem}
-  .cta p b{color:var(--cream);font-weight:500}
-  .cta-pill{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;align-items:center;
-    background:var(--night-2);border:1px solid var(--line);border-radius:99px;padding:16px 30px;
-    font-family:'Space Mono',monospace;font-size:1.05rem}
-  .cta-pill .big{color:var(--gold);font-weight:700;font-size:1.25rem}
-  .cta-pill .lbl{color:var(--cream-dim);font-size:.82rem;letter-spacing:.05em}
-  .cta-note{margin-top:22px;font-size:.92rem;color:var(--cream-dim)}
-
-  footer{padding:34px 0 64px;border-top:1px solid var(--line);color:var(--cream-dim);font-size:.82rem;text-align:center}
-  footer p{max-width:66ch;margin:0 auto}
-
   .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ---------- mobile tuning ---------- */
+  @media(max-width:560px){
+    .wrap{padding:0 20px}
+    .hero{min-height:auto;padding:58px 0 34px}
+    .invite{margin-bottom:22px;letter-spacing:.24em;font-size:11px}
+    .hero h1{margin-bottom:20px}
+    .split{padding:52px 0}
+    .split h2{font-size:1.4rem;max-width:18ch}
+    .bignum{margin:14px 0 4px}
+    .splitter{margin-top:34px;padding:20px 18px}
+    .anchor-line{margin-top:26px;font-size:1rem}
+    .dream{padding:50px 0}
+    .dream-intro{margin-bottom:30px}
+    .dr{padding:26px 22px}
+    .dr h3{font-size:1.35rem}
+    .real{padding:50px 0 66px}
+    .rcard{padding:20px}
+  }
 </style>
 </head>
 <body>
@@ -176,7 +154,6 @@
       <div class="invite">An invitation · for the four of us</div>
       <h1>Let's hire<br>a <em>chef.</em></h1>
       <p class="hero-sub">Picture it. We move to Manila, we get one beautiful long table -- and someone <b>brilliant</b> cooks our dinner. Every night.</p>
-      <div class="scrollcue"><span class="dot"></span> here's the part that'll surprise you</div>
     </header>
 
     <!-- SPLIT / SIGNATURE NUMBER -->
@@ -224,24 +201,6 @@
       </div>
     </section>
 
-    <!-- SAMPLE MENU -->
-    <section class="menu reveal">
-      <div class="menu-card">
-        <div class="menu-eyebrow">a week at our table -- for instance</div>
-        <div class="menu-title">House Menu</div>
-        <div class="menu-rows">
-          <div class="mrow"><div class="mday">MON</div><div class="mdish">Chicken adobo, garlic rice<small>the welcome-home classic, done properly</small></div></div>
-          <div class="mrow"><div class="mday">TUE</div><div class="mdish">Thai green curry, jasmine rice<small>because someone will be craving heat</small></div></div>
-          <div class="mrow"><div class="mday">WED</div><div class="mdish">Sinigang na hipon &amp; grilled fish<small>sour, fresh, halfway-through-the-week medicine</small></div></div>
-          <div class="mrow"><div class="mday">THU</div><div class="mdish">Hand-rolled pasta, burrata, market tomatoes<small>the "are we sure we're not in Italy" night</small></div></div>
-          <div class="mrow"><div class="mday">FRI</div><div class="mdish">Lechon kawali, pancit, atchara<small>Friday earns the crispy pork</small></div></div>
-          <div class="mrow"><div class="mday">SAT</div><div class="mdish">Whatever was freshest at the market<small>chef's call -- usually grilled seafood</small></div></div>
-          <div class="mrow"><div class="mday">SUN</div><div class="mdish">Slow kare-kare, the whole table<small>the long lazy one, nobody checks the time</small></div></div>
-        </div>
-        <div class="menu-foot">Swap anything. It's our menu -- this is just to make your mouth water.</div>
-      </div>
-    </section>
-
     <!-- REASSURANCE -->
     <section class="real reveal">
       <h2>And it's completely doable</h2>
@@ -261,25 +220,7 @@
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta reveal">
-      <h2>So… <em>are we doing this?</em></h2>
-      <p>Same flights, same city, same plan we already love -- plus the best dinner table in Manila. <b>All it takes is the four of us saying yes.</b></p>
-      <div class="cta-pill">
-        <span><span class="lbl">each / dinner</span><br><span class="big mono" id="cta1">₱495</span></span>
-        <span><span class="lbl">each / month</span><br><span class="big mono" id="cta2">₱13,850</span></span>
-        <span><span class="lbl">in £ / month</span><br><span class="big mono" id="cta3">≈ £190</span></span>
-      </div>
-      <p class="cta-note">Cheaper than eating out. Tastier than cooking. Reply "I'm in." 🍽️</p>
-    </section>
-
   </div>
-
-  <footer>
-    <div class="wrap">
-      <p>Numbers are friendly 2026 Manila estimates -- a ₱40,000/month trained chef plus ~₱15,400 of good groceries for the household, split between us, at ₱73 ≈ £1. Ingredients and the chef's pay sit in the same shared pot. Real quotes will wobble; the dream won't.</p>
-    </div>
-  </footer>
 </div>
 
 <script>
@@ -298,10 +239,6 @@
     $('cnt').textContent = n+(n===1?' friend':' friends');
     $('num').textContent = Math.round(perDinner).toLocaleString('en-PH');
     $('gbpline').textContent = '≈ '+pgbp(perDinner)+' a head · about '+peso(perMonth)+' each per month';
-
-    $('cta1').textContent = peso(perDinner);
-    $('cta2').textContent = peso(perMonth);
-    $('cta3').textContent = '≈ '+pgbp(perMonth);
 
     var big=$('num');
     big.style.opacity=.45;
